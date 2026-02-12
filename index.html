@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>APPLICATION CALCULE</title>
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     
-    <form autocomplete="off">
+    <div>
         <div>
             <label for="num1">1 st Number</label>
             <input type="text" id="num1">
@@ -18,15 +17,65 @@
             <input type="text" id="num2">
         </div>
         <div class="btns">
-            <button>Multiply</button>
-            <button>Divide</button>
-            <button>Clear</button>
+            <button class="multiply">Multiply</button>
+            <button class="divide">Divide</button>
+            <button class="sum">Sum</button>
+            <button class="subtraction">Subtraction</button>
+            <button class="clear">Clear</button>
         </div>
         <div class="result-wrapper">
 
         </div>
-    </form>
+    </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Declare globals variables
+        const num1 = document.getElementById('num1');
+        const num2 = document.getElementById('num2');
+        let spanResult = document.createElement('span');
+        const myBtns = document.querySelectorAll('button');
+
+        // Function for calculate the multiply and divide 
+        function multiplyAnddivide (n1, n2) {
+            for (let btn of myBtns) {
+                btn.addEventListener("click", function() {
+                    const nameBtn = btn.getAttribute('class');
+                    // Error input
+                    if (n1.value == "" | n2.value == "") {
+                        spanResult.innerHTML = 'Please, Enter the correct.';
+                        spanResult.style.color = 'red';
+                    } else {
+                        spanResult.style.color = 'black';
+                        switch (nameBtn) {
+                            case "multiply" :
+                                spanResult.innerHTML = `The result of :  ${n1.value} * ${n2.value} = ${n1.value * n2.value}`;
+                            break;
+                            case "divide" :
+                                spanResult.innerHTML = `The result of :  ${n1.value} / ${n2.value} = ${n1.value / n2.value}`;
+                            break;
+                            case "sum" :
+                                spanResult.innerHTML = `The result of :  ${n1.value} + ${n2.value} = ${parseInt(n1.value) + parseInt(n2.value)}`;
+                            break;
+                            case "subtraction" :
+                                spanResult.innerHTML = `The result of :  ${n1.value} - ${n2.value} = ${n1.value - n2.value}`;
+                            break;
+                            case "clear" :
+                                n1.value = '';
+                                n2.value = '';
+                                spanResult.innerHTML = '';
+                            break;
+                        }
+                    }
+                })
+                document.body.querySelector('.result-wrapper').append(spanResult);   
+            }
+        }
+
+        // Launch application
+        function app() {
+            multiplyAnddivide(num1, num2);
+        }
+        app();
+    </script>
 </body>
 </html>
